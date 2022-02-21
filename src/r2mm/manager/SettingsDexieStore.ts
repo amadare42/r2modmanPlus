@@ -32,7 +32,10 @@ export default class SettingsDexieStore extends Dexie {
 
         // Add all games to store. Borked v2-3 locally
         // Increment per game or change to settings.
-        this.version(28).stores(store);
+
+        // HACK: this awful hack is needed because we cannot be sure what games would be supported and therefore what tables are expected
+        //       so we just force migrations each run to prevent breaking application
+        this.version(Date.now()).stores(store);
 
         this.activeGame = game;
         this.global = this.table("value");

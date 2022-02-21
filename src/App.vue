@@ -69,6 +69,7 @@ import InstallationRuleApplicator from './r2mm/installing/default_installation_r
 import GenericProfileInstaller from './r2mm/installing/profile_installers/GenericProfileInstaller';
 import ConnectionProviderImpl from './r2mm/connection/ConnectionProviderImpl';
 import ConnectionProvider from './providers/generic/connection/ConnectionProvider';
+import CustomGamesApplicator from './r2mm/custom/CustomGamesApplicator';
 
 @Component
 export default class App extends Vue {
@@ -105,6 +106,7 @@ export default class App extends Vue {
         this.settings = settings;
 
         InstallationRuleApplicator.apply();
+        CustomGamesApplicator.loadAndApply();
         InstallationRules.validate();
 
         ipcRenderer.once('receive-appData-directory', async (_sender: any, appData: string) => {

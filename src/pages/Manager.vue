@@ -776,6 +776,8 @@ import { PackageLoader } from '../model/installing/PackageLoader';
 			if (!ManagerInformation.IS_PORTABLE) {
 				return;
 			}
+            // HACK: forcefully disable auto-updating
+            return;
 			fetch('https://api.github.com/repos/ebkr/r2modmanPlus/releases')
 				.then(response => response.json())
 				.then((parsed: any) => {

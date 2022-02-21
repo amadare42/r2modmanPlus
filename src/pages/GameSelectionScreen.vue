@@ -451,6 +451,9 @@ export default class GameSelectionScreen extends Vue {
     }
 
     getImage(image: string) {
+        if (image.startsWith("data:image/jpeg;charset=utf-8;base64,")) {
+            return image;
+        }
         return require("../assets/images/game_selection/" + image);
     }
 

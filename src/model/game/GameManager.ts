@@ -5,6 +5,7 @@ import { GameSelectionDisplayMode } from '../../model/game/GameSelectionDisplayM
 import { GameInstanceType } from '../../model/game/GameInstanceType';
 import { PackageLoader } from '../../model/installing/PackageLoader';
 import * as path from 'path';
+import { DynamicGameConfig } from '../../r2mm/custom/model';
 
 export default class GameManager {
 
@@ -177,6 +178,18 @@ export default class GameManager {
             GameSelectionDisplayMode.VISIBLE, GameInstanceType.GAME, PackageLoader.BEPINEX, ['hotds'])
 
     ];
+
+    static loadDynamic(cfg: DynamicGameConfig) {
+        let platforms = cfg.platforms.map(p => {
+            return new StorePlatformMetadata(<StorePlatform>p.platform, p.identifier);
+        });
+
+        this._gameList.push(new Game(cfg.displayName, cfg.internalFolderName, cfg.settingsIdentifier,
+            cfg.steamFolderName, cfg.exeName, cfg.dataFolderName,
+            cfg.tsUrl, cfg.exclusionsUrl, platforms, cfg.gameImage,
+            GameSelectionDisplayMode.VISIBLE, <GameInstanceType>cfg.instanceType, PackageLoader[cfg.packageLoader])
+        );
+    }
 
     static get activeGame(): Game {
         return this._activeGame;

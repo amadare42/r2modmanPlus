@@ -7,6 +7,69 @@
 | [Features](#features) | [What is a mod manager?](#what-is-a-mod-manager) | [Installing](#installing) | [Help](#help) | [Feedback and suggestions](#feedback-and-suggestions) | [Changelog](#changelog) | [Screenshots](#screenshots) |
 |---|---|---|---|---|---|---|
 
+## Fork differences
+
+This for has hacked-in support for custom games. So as long as you provide necessary files with your game configuration, application doesn't need to be rebuilt to support them.
+To add support for new game, create `custom` directory. There you should create 2 files:
+- \[gamename].json _(custom game configuration. Refer to `src/r2mm/custom/model.ts` file for typings)
+- \[gamename].png _(custom game icon)_
+
+Custom game example:
+```json
+{
+    "displayName": "For The King",
+    "internalFolderName": "ForTheKing",
+    "settingsIdentifier": "ForTheKing",
+    "steamFolderName": "For The King",
+    "exeName": ["FTK.exe"],
+    "dataFolderName": "FTK_Data",
+    "tsUrl": "https://localhost:44362/package",
+    "exclusionsUrl": "https://localhost:44362/package/empty",
+    "platforms": [{
+      "platform": "Steam",
+      "identifier": "527230"
+    }],
+    "instanceType": "Game",
+    "packageLoader": "BEPINEX",
+    "loaderVariants": [{
+      "packageName": "bbepis-BepInExPack",
+      "rootFolder": "BepInExPack",
+      "packageLoader": "BEPINEX"
+    }],
+    "installationRule": {
+      "gameName": "ForTheKing",
+      "rules": [
+        {
+          "route": "BepInEx/plugins",
+          "isDefaultLocation": true,
+          "defaultFileExtensions": [".dll"],
+          "trackingMethod": "SUBDIR",
+          "subRoutes": []
+        },
+        {
+          "route": "BepInEx/core",
+          "defaultFileExtensions": [],
+          "trackingMethod": "SUBDIR",
+          "subRoutes": []
+        },
+        {
+          "route": "BepInEx/patchers",
+          "defaultFileExtensions": [],
+          "trackingMethod": "SUBDIR",
+          "subRoutes": []
+        },
+        {
+          "route": "BepInEx/config",
+          "defaultFileExtensions": [],
+          "trackingMethod": "NONE",
+          "subRoutes": []
+        }
+      ]
+    }
+  }
+```
+
+
 ## Features
 - Support for Risk of Rain 2, Dyson Sphere Program, Valheim, GTFO, Outward, TaleSpire, H3VR, ROUNDS, Mechanica, Muck, BONEWORKS,
 Lethal League Blaze, Timberborn, Totally Accurate Battle Simulator, Nickelodeon All-Star Brawl, Inscryption, Starsand, and more.
